@@ -6,7 +6,13 @@ mu = 2 * X[,1] * X[,2] + 3 * X[,3] + 4 * X[,4]
 Y = mu + rnorm(n)
 
 boost_reg_forest = boosted_regression_forest(X,Y)
-mean((Y-predict(boost_reg_forest))^2) 
+length(boost_reg_forest)
+mean((Y-predict(boost_reg_forest)$predictions)^2) 
+mean((Y-predict(boost_reg_forest,X)$predictions)^2) 
+
+reg_forest = regression_forest(X,Y)
+mean((Y-predict(reg_forest)$predictions)^2)
+
 
 set.seed(1)
 ##Test implementation of causal forest that uses boosted forest 
