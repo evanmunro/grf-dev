@@ -1,17 +1,19 @@
 
 ## Test boosted_regression_forest
-n = 2000; p = 10
-X = matrix(runif(n * p), n, p)
-mu = 2 * X[,1] * X[,2] + 3 * X[,3] + 4 * X[,4]
-Y = mu + rnorm(n)
+compare_mse <-function(n=1000,p=6) { 
+  X = matrix(runif(n * p), n, p)
+  mu = 2 * X[,1] * X[,2] + 3 * X[,3] + 4 * X[,4]
+  Y = mu + rnorm(n)
 
-boost_reg_forest = boosted_regression_forest(X,Y)
-length(boost_reg_forest)
-mean((Y-predict(boost_reg_forest)$predictions)^2) 
-mean((Y-predict(boost_reg_forest,X)$predictions)^2) 
+  boost_reg_forest = boosted_regression_forest(X,Y)
+  mse.boost <- mean((Y-predict(boost_reg_forest)$predictions)^2) 
 
-reg_forest = regression_forest(X,Y)
-mean((Y-predict(reg_forest)$predictions)^2)
+  reg_forest = regression_forest(X,Y)
+  mse.forest<- mean((Y-predict(reg_forest)$predictions)^2)
+  return(c(mse.boost,mse.forest)) 
+} 
+
+
 
 
 set.seed(1)
